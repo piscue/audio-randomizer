@@ -19,13 +19,14 @@ def variables_setup():
 
 
 def load_wave(fileinput: str) -> Dict:
-    dict_wave = {}
-    dict_wave['filename'] = fileinput
+    wavedict = {}
+    wavedict['filename'] = fileinput
     wavefile = wave.open(fileinput, mode='rb')
-    dict_wave['audio_frames'] = wavefile.getnframes()
-    dict_wave['params'] = wavefile.getparams()
-    dict_wave['wave'] = wavefile.readframes(dict_wave["audio_frames"])
-    return dict_wave
+    wavedict['audio_frames'] = wavefile.getnframes()
+    wavedict['params'] = wavefile.getparams()
+    wavedict['wave'] = wavefile.readframes(wavedict["audio_frames"])
+    return wavedict
+
 
 
 if __name__ == "__main__":
