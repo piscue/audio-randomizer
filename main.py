@@ -7,6 +7,20 @@ import argparse
 from typing import Dict, List
 
 
+counter = 0
+
+
+def powoftwo(n: int) -> bool:
+    global counter
+    counter += 1
+    if n % 2 != 0:
+        return False
+    else:
+        if n == 2:
+            return True
+        return powoftwo(n/2)
+
+
 def variables_setup():
     parser = argparse.ArgumentParser(description='Process Env and Svc')
     parser.add_argument('--input', '-i')
@@ -17,6 +31,10 @@ def variables_setup():
         sys.exit(42)
     if not args.splits:
         print('missing number of splits')
+        sys.exit(42)
+    if not powoftwo(int(args.splits)):
+        print('splits number should be in the power of two'
+              + args.splits + ' is not power of two')
         sys.exit(42)
     return parser.parse_known_args()
 
