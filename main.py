@@ -47,13 +47,17 @@ def load_wave(fileinput: str, splits: int) -> Dict:
     return wavedict
 
 
-def randomize_wave(framesdict: Dict, splits: int) -> List:
+def list_2_bytes(wavelist: List) -> bytes:
+    return b"".join(wavelist)
+
+
+def randomize_wave(framesdict: Dict, splits: int) -> bytes:
     wavelist = []
     for i in range(splits):
         key = random.choice(list(framesdict.keys()))
         wavelist.append(framesdict[key])
         del framesdict[key]
-    return wavelist
+    return list_2_bytes(wavelist)
 
 
 def output_filename(filename: str) -> str:
