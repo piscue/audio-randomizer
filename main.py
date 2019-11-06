@@ -23,8 +23,7 @@ def variables_setup():
 
 def split_frames(frames: int, splits: int, frames_number: int) -> Dict:
     framesdict = {}
-    x=0
-    wavList=[]
+    x = 0
     chunksize = frames_number / splits
     for i in range(splits):
         curFrame = frames[x:(x+int(chunksize))]
