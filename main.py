@@ -57,6 +57,18 @@ def randomize_wave(framesdict: Dict, splits: int) -> List:
     return wavelist
 
 
+def output_filename(filename: str) -> str:
+    filenmame_without_extenion = os.path.splitext(filename)[0]
+    return filenmame_without_extenion + '_rnd.wav'
+
+
+def export_wave(waveresult: bytes, filename: str, params: set):
+    exportfilename = output_filename(filename)
+    exportwave = wave.open(exportfilename, mode='w')
+    exportwave.setparams(params)
+    exportwave.writeframes(waveresult)
+
+
 if __name__ == "__main__":
     vars, unknown = variables_setup()
     wavedict = load_wave(vars.input, int(vars.splits))
