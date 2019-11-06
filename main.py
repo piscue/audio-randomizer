@@ -1,7 +1,9 @@
-import wave
-import argparse
 import sys
-from typing import Dict
+import wave
+import random
+import argparse
+
+from typing import Dict, List
 
 
 def variables_setup():
