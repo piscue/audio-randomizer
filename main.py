@@ -47,6 +47,14 @@ def load_wave(fileinput: str, splits: int) -> Dict:
     return wavedict
 
 
+def randomize_wave(framesdict: Dict, splits: int) -> List:
+    wavelist = []
+    for i in range(splits):
+        key = random.choice(list(framesdict.keys()))
+        wavelist.append(framesdict[key])
+        del framesdict[key]
+    return wavelist
+
 
 if __name__ == "__main__":
     vars, unknown = variables_setup()
