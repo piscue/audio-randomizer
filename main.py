@@ -75,4 +75,5 @@ def export_wave(waveresult: bytes, filename: str, params: set):
 if __name__ == "__main__":
     vars, unknown = variables_setup()
     wavedict = load_wave(vars.input, int(vars.splits))
-    wavelist = randomize_wave(wavedict['frames'], int(vars.splits))
+    waveresult = randomize_wave(wavedict['frames'], int(vars.splits))
+    export_wave(waveresult, vars.input, wavedict['params'])
