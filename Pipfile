@@ -10,4 +10,4 @@ name = "pypi"
 
 [requires]
 
-python_full_version = "3.7.1"
+python_full_version = "3.8"
