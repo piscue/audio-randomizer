@@ -79,7 +79,7 @@ def randomize_wave(framesdict: Dict, splits: int) -> bytes:
 
 def output_filename(filename: str, splits: str) -> str:
     filenmame_without_extenion = os.path.splitext(filename)[0]
-    return filenmame_without_extenion + '_rnd_' + splits +'.wav'
+    return filenmame_without_extenion + '_rnd_' + splits + '.wav'
 
 
 def export_wave(waveresult: bytes, filename: str, params: set, splits: int):
