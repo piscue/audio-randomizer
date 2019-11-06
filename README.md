@@ -19,3 +19,9 @@ You can specify the Wave file to use and the number of chunks
 
 python3 main.py -i original.wav -s 128
 ```
+
+## Pipenv
+
+The requirements are created using pipenv. In order to use the same environment you can run:
+
+```pipenv shell```
