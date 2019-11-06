@@ -37,7 +37,8 @@ def load_wave(fileinput: str, splits: int) -> Dict:
     wavedict = {}
     wavedict['filename'] = fileinput
     wavefile = wave.open(fileinput, mode='rb')
-    wavedict['audio_frames'] = wavefile.getnframes()
+    wavedict['frame_rate'] = wavefile.getframerate()
+    wavedict['frames_number'] = wavefile.getnframes()
     wavedict['params'] = wavefile.getparams()
     wavedict['wave'] = wavefile.readframes(wavedict["audio_frames"])
     return wavedict
