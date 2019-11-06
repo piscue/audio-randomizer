@@ -40,7 +40,10 @@ def load_wave(fileinput: str, splits: int) -> Dict:
     wavedict['frame_rate'] = wavefile.getframerate()
     wavedict['frames_number'] = wavefile.getnframes()
     wavedict['params'] = wavefile.getparams()
-    wavedict['wave'] = wavefile.readframes(wavedict["audio_frames"])
+    wavedict['duration'] = wavedict['frames_number'] / wavedict['frame_rate']
+    all_frames = wavefile.readframes(wavedict['frames_number'])
+    wavedict['frames'] = split_frames(all_frames, splits,
+                                      wavedict['frames_number'])
     return wavedict
 
 
