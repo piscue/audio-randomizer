@@ -58,4 +58,5 @@ def randomize_wave(framesdict: Dict, splits: int) -> List:
 
 if __name__ == "__main__":
     vars, unknown = variables_setup()
-    wavedict = load_wave(vars.input)
+    wavedict = load_wave(vars.input, int(vars.splits))
+    wavelist = randomize_wave(wavedict['frames'], int(vars.splits))
