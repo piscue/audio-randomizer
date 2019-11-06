@@ -20,7 +20,20 @@ def variables_setup():
     return parser.parse_known_args()
 
 
-def load_wave(fileinput: str) -> Dict:
+def split_frames(frames: int, splits: int, frames_number: int) -> Dict:
+    framesdict = {}
+    x=0
+    wavList=[]
+    chunksize = frames_number / splits
+    for i in range(splits):
+        curFrame = frames[x:(x+int(chunksize))]
+        x=x+int(chunksize)
+        framesdict[i] = curFrame
+        i += 1
+    return framesdict
+
+
+def load_wave(fileinput: str, splits: int) -> Dict:
     wavedict = {}
     wavedict['filename'] = fileinput
     wavefile = wave.open(fileinput, mode='rb')
