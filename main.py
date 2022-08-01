@@ -86,8 +86,11 @@ def output_filename(filename: str, splits: str) -> str:
 def export_wave(waveresult: bytes, filename: str, params: set, splits: int):
     exportfilename = output_filename(filename, splits)
     exportwave = wave.open(exportfilename, mode='w')
-    exportwave.setparams(params)
-    exportwave.writeframesraw(waveresult)
+    exportwave.setnchannels(params.nchannels)
+    exportwave.setsampwidth(params.sampwidth)
+    exportwave.setframerate(params.framerate)
+    exportwave.writeframes(waveresult)
+    exportwave.close()
 
 
 if __name__ == "__main__":
