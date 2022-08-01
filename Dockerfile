@@ -1,4 +1,4 @@
-FROM python:3.8.0-alpine
+FROM python:3.10-alpine
 ADD requirements.txt /
 RUN pip install -r /requirements.txt \
  && rm /requirements.txt \
