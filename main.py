@@ -39,15 +39,17 @@ def variables_setup():
     return parser.parse_known_args()
 
 
-def split_frames(frames: int, splits: int) -> Dict:
+def split_frames(wavefile: wave.Wave_read, splits: int, duration: int) -> Dict:
     framesdict = {}
-    x = 0
-    chunksize = len(frames) / splits
+    split_duration = int(duration) / splits
+    framerate = wavefile.getframerate()
+    actual_position = int(1)
     for i in range(splits):
-        curFrame = frames[x:(x + int(chunksize))]
-        x = x + int(chunksize)
-        framesdict[i] = curFrame
-        i += 1
+        frame_position = int(actual_position * framerate)
+        wavefile.setpos(frame_position)
+        split_read = split_duration * framerate
+        framesdict[i] = wavefile.readframes(int(split_read))
+        actual_position = actual_position + split_duration
     return framesdict
 
 
@@ -59,8 +61,7 @@ def load_wave(fileinput: str, splits: int) -> Dict:
     wavedict['frames_number'] = wavefile.getnframes()
     wavedict['params'] = wavefile.getparams()
     wavedict['duration'] = wavedict['frames_number'] / wavedict['frame_rate']
-    all_frames = wavefile.readframes(wavedict['frames_number'])
-    wavedict['frames'] = split_frames(all_frames, splits)
+    wavedict['frames'] = split_frames(wavefile, splits, wavedict['duration'])
     return wavedict
 
 
