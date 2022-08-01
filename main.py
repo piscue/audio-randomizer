@@ -41,15 +41,15 @@ def variables_setup():
 
 def split_frames(wavefile: wave.Wave_read, splits: int, duration: int) -> Dict:
     framesdict = {}
-    split_duration = int(duration) / splits
-    framerate = wavefile.getframerate()
-    actual_position = int(1)
+    split_duration = duration / splits
+    frame_rate = wavefile.getframerate()
+    split_readframes_size = split_duration * frame_rate
+    actual_position = 1
     for i in range(splits):
-        frame_position = int(actual_position * framerate)
-        wavefile.setpos(frame_position)
-        split_read = split_duration * framerate
-        framesdict[i] = wavefile.readframes(int(split_read))
-        actual_position = actual_position + split_duration
+        frame_position = actual_position * frame_rate
+        wavefile.setpos(int(frame_position))
+        framesdict[i] = wavefile.readframes(int(split_readframes_size))
+        actual_position += split_duration
     return framesdict
 
 
