@@ -47,7 +47,11 @@ def split_frames(wavefile: wave.Wave_read, splits: int, duration: int) -> Dict:
     actual_position = 1
     for i in range(splits):
         frame_position = actual_position * frame_rate
-        wavefile.setpos(int(frame_position))
+        try:
+            wavefile.setpos(int(frame_position))
+        except wave.Error:
+            print("Error: reading wav at that position, too much splits or file is too small")
+            sys.exit(42)
         framesdict[i] = wavefile.readframes(int(split_readframes_size))
         actual_position += split_duration
     return framesdict
