@@ -7,6 +7,7 @@ name = "pypi"
 [packages]
 "wave" = "*"
 "argparse" = "*"
+"alive_progress" = "*"
 
 [requires]
 
