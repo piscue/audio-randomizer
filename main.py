@@ -82,7 +82,7 @@ def randomize_wave(framesdict: Dict, splits: int) -> bytes:
             wavelist.append(framesdict[key])
             del framesdict[key]
         except IndexError:
-            print(f'Idex out of range, skipping this iteration {i}')
+            print(f'Index out of range, skipping this iteration {i}')
     return list_2_bytes(wavelist)
 
 
