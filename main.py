@@ -53,7 +53,6 @@ def split_frames(wavefile: wave.Wave_read, splits: int, duration: int) -> Dict:
                 wavefile.setpos(int(frame_position))
             except wave.Error:
                 print(f'Cannot set position to {frame_position} in iteration {i}')
-                print("Error: reading wav at that position, creating a slightly shorter wav")
                 return framesdict
             framesdict[i] = wavefile.readframes(int(split_readframes_size))
             actual_position += split_duration
