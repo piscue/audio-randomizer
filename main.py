@@ -50,8 +50,9 @@ def split_frames(wavefile: wave.Wave_read, splits: int, duration: int) -> Dict:
         try:
             wavefile.setpos(int(frame_position))
         except wave.Error:
-            print("Error: reading wav at that position, too much splits or file is too small")
-            sys.exit(42)
+            print(f'Cannot set position to {frame_position} in iteration {i}')
+            print("Error: reading wav at that position, creating a slightly shorter wav")
+            return framesdict
         framesdict[i] = wavefile.readframes(int(split_readframes_size))
         actual_position += split_duration
     return framesdict
@@ -76,9 +77,12 @@ def list_2_bytes(wavelist: List) -> bytes:
 def randomize_wave(framesdict: Dict, splits: int) -> bytes:
     wavelist = []
     for i in range(splits):
-        key = random.choice(list(framesdict.keys()))
-        wavelist.append(framesdict[key])
-        del framesdict[key]
+        try:
+            key = random.choice(list(framesdict.keys()))
+            wavelist.append(framesdict[key])
+            del framesdict[key]
+        except IndexError:
+            print(f'Idex out of range, skipping this iteration {i}')
     return list_2_bytes(wavelist)
 
 
