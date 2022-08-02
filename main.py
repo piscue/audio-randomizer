@@ -4,6 +4,7 @@ import wave
 import random
 import argparse
 
+from alive_progress import alive_bar
 from typing import Dict, List
 
 
@@ -45,17 +46,18 @@ def split_frames(wavefile: wave.Wave_read, splits: int, duration: int) -> Dict:
     frame_rate = wavefile.getframerate()
     split_readframes_size = split_duration * frame_rate
     actual_position = 1
-    for i in range(splits):
-        frame_position = actual_position * frame_rate
-        try:
-            wavefile.setpos(int(frame_position))
-        except wave.Error:
-            print(f'Cannot set position to {frame_position} in iteration {i}')
-            print("Error: reading wav at that position, creating a slightly shorter wav")
-            return framesdict
-        framesdict[i] = wavefile.readframes(int(split_readframes_size))
-        actual_position += split_duration
-    return framesdict
+    with alive_bar(splits, title='Read Frames', force_tty=True) as bar:
+        for i in range(splits):
+            frame_position = actual_position * frame_rate
+            try:
+                wavefile.setpos(int(frame_position))
+            except wave.Error:
+                print(f'Cannot set position to {frame_position} in iteration {i}')
+                return framesdict
+            framesdict[i] = wavefile.readframes(int(split_readframes_size))
+            actual_position += split_duration
+            bar()
+        return framesdict
 
 
 def load_wave(fileinput: str, splits: int) -> Dict:
@@ -76,13 +78,16 @@ def list_2_bytes(wavelist: List) -> bytes:
 
 def randomize_wave(framesdict: Dict, splits: int) -> bytes:
     wavelist = []
-    for i in range(splits):
-        try:
-            key = random.choice(list(framesdict.keys()))
-            wavelist.append(framesdict[key])
-            del framesdict[key]
-        except IndexError:
-            print(f'Index out of range, skipping this iteration {i}')
+    with alive_bar(splits, title='Randomize Wave', force_tty=True) as bar:
+        for i in range(splits):
+            try:
+                key = random.choice(list(framesdict.keys()))
+                wavelist.append(framesdict[key])
+                del framesdict[key]
+            except IndexError:
+                print(f'Index out of range, in iteration {i}, returning wave')
+                return list_2_bytes(wavelist)
+            bar()
     return list_2_bytes(wavelist)
 
 

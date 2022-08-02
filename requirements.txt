@@ -1,3 +1,6 @@
 -i https://pypi.python.org/simple
+about-time==3.1.1
+alive-progress==2.4.1
 argparse==1.4.0
+grapheme==0.6.0
 wave==0.0.2
