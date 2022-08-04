@@ -45,7 +45,7 @@ def split_frames(wavefile: wave.Wave_read, splits: int, duration: int) -> Dict:
         return framesdict
 
 
-def load_wave(fileinput: str, splits: int) -> Dict:
+def load_wave_and_split(fileinput: str, splits: int) -> Dict:
     wavedict = {}
     wavedict['filename'] = fileinput
     wavefile = wave.open(fileinput, mode='rb')
@@ -93,6 +93,6 @@ def export_wave(waveresult: bytes, filename: str, params: set, splits: int):
 
 if __name__ == "__main__":
     vars, unknown = variables_setup()
-    wavedict = load_wave(vars.input, int(vars.splits))
+    wavedict = load_wave_and_split(vars.input, int(vars.splits))
     waveresult = randomize_wave(wavedict['frames'], int(vars.splits))
     export_wave(waveresult, vars.input, wavedict['params'], vars.splits)
