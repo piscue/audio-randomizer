@@ -1,6 +1,5 @@
-import pytest
+from main import output_filename
 
-one=1
 
-def test_check_one():
-    assert one == 1
+def test_output_filename:
+    assert output_filename("test_filename.txt", "34") = "wrong_out"
